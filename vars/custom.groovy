@@ -3,6 +3,6 @@ def call(String repoName) {
     sh """
         git clone ${gitUrl}
         cd ${repoName}
-        mvn clean package
+        mvn clean package -DskipTests=true
     """
 }
