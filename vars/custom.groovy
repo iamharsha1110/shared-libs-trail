@@ -1,4 +1,4 @@
-def call (Map config = [:]) {
+def call(Map config = [:]) {
     def gitUrl = "https://github.com/iamharsha1110/${config.repoName}.git"
     sh """
         git clone -b ${config.branch} ${gitUrl}
