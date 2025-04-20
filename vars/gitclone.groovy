@@ -4,4 +4,5 @@ def call(Map config = [:]) {
         git clone -b ${config.branch} ${gitUrl}
         echo "Cloning done - ${config.repoName} from ${gitUrl} on branch '${config.branch}'"
     """
+    sh "pwd"
 }
