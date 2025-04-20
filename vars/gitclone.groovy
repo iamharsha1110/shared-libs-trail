@@ -5,5 +5,5 @@ def call(Map config = [:]) {
         echo "Cloning done - ${config.repoName} from ${gitUrl} on branch '${config.branch}'"
     """
     sh "pwd"
-    sh "cd ${config.repoName}
+    sh "cd ${config.repoName}"
 }
