@@ -1,8 +1,9 @@
-def call(String repoName) {
-    def gitUrl = "https://github.com/iamharsha1110/${repoName}.git"
+def call(Map config = [:]) {
+    def gitUrl = "https://github.com/iamharsha1110/${config.repoName}.git"
     sh """
-        git clone ${gitUrl}
-        cd ${repoName}
-        mvn clean package
+        git clone -b ${config.branch} ${gitUrl}
+        cd ${config.repoName}
+        mvn clean compile
+        echo "Cloning done - ${config.repoName} from ${gitUrl} on branch '${config.branch}'"
     """
 }
