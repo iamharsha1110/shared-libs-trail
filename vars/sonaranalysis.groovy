@@ -8,6 +8,7 @@ def call(Map config = [:]) {
                cd ${config.pipelinename}
                pwd
                cd ${config.repoName}
+               pwd
                 mvn clean verify -DskipTests=true sonar:sonar \
                     -Dsonar.projectKey=${config.projectKey} \
                     -Dsonar.projectName='${config.projectName}' \
