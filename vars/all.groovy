@@ -19,7 +19,7 @@ def test(Map config = [:]) {
 def sonar(Map config = [:]) {
     withSonarQubeEnv(config.sonarserver) {
         withCredentials([string(credentialsId: config.sonartoken, variable: 'SONAR_TOKEN')]) {
-            sh """
+            sh '''
                cd ..
                cd ${config.pipelinename}
                cd ${config.repoName}
@@ -27,8 +27,8 @@ def sonar(Map config = [:]) {
                 mvn clean verify -DskipTests=true sonar:sonar \
                     -Dsonar.projectKey=${config.projectKey} \
                     -Dsonar.projectName='${config.projectName}' \
-                    -Dsonar.token=$SONAR_TOKEN
-            """
+                    -Dsonar.token=${SONAR_TOKEN}
+            '''
         }
     }
 }
