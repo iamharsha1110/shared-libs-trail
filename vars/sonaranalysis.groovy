@@ -2,11 +2,8 @@ def call(Map config = [:]) {
     withSonarQubeEnv(config.sonarserver) {
         withCredentials([string(credentialsId: config.sonartoken, variable: 'SONAR_TOKEN')]) {
             sh """
-               pwd
                cd ..
-               pwd
                cd ${config.pipelinename}
-               pwd
                cd ${config.repoName}
                pwd
                 mvn clean verify -DskipTests=true sonar:sonar \
