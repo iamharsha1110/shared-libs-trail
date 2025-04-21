@@ -3,8 +3,8 @@ def call(Map config = [:]) {
     sh """
         git clone -b ${config.branch} ${gitUrl}
         echo "Cloning done - ${config.repoName} from ${gitUrl} on branch '${config.branch}'"
+        pwd
+        cd ${config.repoName}
+        pwd
     """
-    sh "pwd"
-    sh "cd ${config.repoName}"
-    sh "pwd"
 }
