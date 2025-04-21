@@ -1,3 +1,7 @@
 def call() {
-    sh "mvn clean package"
+    sh """
+        pwd
+        cd ${config.repoName}
+        mvn clean package
+        """
 }
