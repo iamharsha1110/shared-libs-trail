@@ -1,7 +1,6 @@
 def call(Map config = [:]) {
-    sh '''
+    sh """
         cd ${config.repoName}
         mvn test
-    '''
-
+    """
 }
