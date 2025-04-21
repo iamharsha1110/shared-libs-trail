@@ -6,4 +6,5 @@ def call(Map config = [:]) {
     """
     sh "pwd"
     sh "cd ${config.repoName}"
+    sh "pwd"
 }
