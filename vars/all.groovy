@@ -44,6 +44,7 @@ def build(Map config = [:]) {
     sh """
         pwd
         cd ${config.repoName}
+        pwd
         mvn clean package
         """
 }
