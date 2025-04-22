@@ -16,7 +16,7 @@ def test(Map config = [:]) {
     """
 }
 
-def call(Map config = [:]) {
+def sonar(Map config = [:]) {
     def path = "../${config.pipelinename}/${config.repoName}"
     
     withSonarQubeEnv(config.sonarserver) {
