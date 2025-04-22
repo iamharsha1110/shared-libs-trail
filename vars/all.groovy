@@ -34,7 +34,7 @@ def sonar(Map config = [:]) {
     }
 }
 
-def call(Map config = [:]) {
+def qg(Map config = [:]) {
     timeout(time: config.timeout ?: 2, unit: 'MINUTES') {
         waitForQualityGate abortPipeline: true
     }
