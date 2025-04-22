@@ -28,7 +28,7 @@ def sonar(Map config = [:]) {
                 mvn clean verify -DskipTests=true sonar:sonar \
                     -Dsonar.projectKey=${config.projectKey} \
                     -Dsonar.projectName='${config.projectName}' \
-                    -Dsonar.token=${SONAR_TOKEN}
+                    -Dsonar.token=$SONAR_TOKEN
             """
         }
     }
