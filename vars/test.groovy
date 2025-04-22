@@ -1,6 +1,8 @@
-def call(Map config = [:]) {
-    sh """
-        cd ${config.repoName}
-        mvn test
-    """
+def test(Map config = [:]) {
+    dir("${config.repoName}") {
+        sh """
+            pwd
+            mvn test
+        """
+    }
 }
