@@ -6,6 +6,7 @@ def call(Map config = [:]) {
             dir(path) {
                 sh """
                     pwd
+                    echo "\${SONAR_TOKEN}"
                     mvn clean verify -DskipTests=true sonar:sonar \\
                         -Dsonar.projectKey=${config.projectKey} \\
                         -Dsonar.projectName='${config.projectName}' \\
