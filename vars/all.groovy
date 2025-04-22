@@ -16,13 +16,10 @@ def test(Map config = [:]) {
 }
 
 def sonar(Map config = [:]) {
-    def path = "../${config.pipelinename}/${config.repoName}"
-    
     withSonarQubeEnv(config.sonarserver) {
         withCredentials([string(credentialsId: config.sonartoken, variable: 'SONAR_TOKEN')]) {
-            dir(path) {
+            dir("${config.repoName}") {
                 sh """
-                    pwd
                     mvn clean verify -DskipTests=true sonar:sonar \\
                         -Dsonar.projectKey=${config.projectKey} \\
                         -Dsonar.projectName='${config.projectName}' \\
@@ -32,6 +29,7 @@ def sonar(Map config = [:]) {
         }
     }
 }
+
 
 def qg(Map config = [:]) {
     timeout(time: config.timeout ?: 2, unit: 'MINUTES') {
