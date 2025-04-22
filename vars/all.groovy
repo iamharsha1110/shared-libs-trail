@@ -10,10 +10,12 @@ def gc(Map config = [:]) {
 }
 
 def test(Map config = [:]) {
-    sh """
-        cd ${config.repoName}
-        mvn test
-    """
+    dir("${config.repoName}") {
+        sh """
+            pwd
+            mvn test
+        """
+    }
 }
 
 def sonar(Map config = [:]) {
@@ -41,10 +43,10 @@ def qg(Map config = [:]) {
 }
 
 def build(Map config = [:]) {
-    sh """
-        pwd
-        cd ${config.repoName}
-        pwd
-        mvn package
+    dir("${config.repoName}") {
+        sh """
+            pwd
+            mvn clean package
         """
+    }
 }
