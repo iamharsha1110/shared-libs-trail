@@ -1,0 +1,105 @@
+User data --
+
+sudo apt update
+unzip awscliv2.zip                                                                                    #Unzip the package
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"                     #Download the installation script
+sudo apt install unzip                                                                                #software to download unzip tool
+
+#then unzip the previously installed zipped package using the previously mentioned unzip command  
+#then give command " ls "
+#go to the  " aws " directory & then depending on the directory you are in , give the command----
+
+sudo ./aws/install (or) sudo ./install
+
+#then you will see " You can now run: /usr/local/bin/aws --version "
+
+ aws --version                                                                                        #to check the cli version
+
+{ OR }
+                               
+sudo snap install aws-cli                                                                             #install aws cli
+sudo snap install aws-cli --classic 
+sudo apt install -y wget unzip                                                                        #install unzipping tool 
+aws --version                                                                                         #to check the cli version   
+
+
+
+sudo apt-get install amazon-cloudwatch-agent                                                          #install the CWAgent - 1st choice
+
+
+wget https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb  #download the CWAgent package
+sudo dpkg -i amazon-cloudwatch-agent.deb                                                              #install the CWAgent package
+sudo systemctl start amazon-cloudwatch-agent                                                          #start aws CWAgent
+sudo systemctl enable amazon-cloudwatch-agent                                                         #enable
+sudo systemctl status amazon-cloudwatch-agent                                                         #check status for CWAgent
+
+#Create the Configuration File: You can create a basic configuration file using a text editor like nano 
+
+sudo nano /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json 
+
+{
+    "metrics": {
+        "metrics_collected": {
+            "mem": {
+                "measurement": [
+                    "mem_used_percent",
+                    "mem_available",
+                    "mem_total"
+                ],
+                "metrics_collection_interval": 60
+            }
+        },
+        "append_dimensions": {
+            "InstanceId": "${aws:InstanceId}"
+        }
+    }
+}
+
+#replace the instance id here with the actual value
+#Save and Exit 
+
+
+sudo systemctl status amazon-cloudwatch-agent
+sudo less /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log                            #Monitor Logs (if needed)
+
+
+
+#if you get the ACTIVITY STATUS - inactive here , find it on chatgpt
+
+
+sudo apt update 
+sudo apt-get install stress 
+stress --vm 4 --vm-bytes 1G --timeout 60s                                                              #command to stress the ubuntu ec2 via memory utilization
+
+{
+#--vm: Specifies the number of virtual machines to create.
+#--vm-bytes: Sets the memory allocation for each virtual machine in bytes.
+#--timeout: Defines the duration of the stress test in seconds. }
+
+stress --vm 1 --vm-bytes 512M --timeout 120
+
+free -h                                                                                               #The free command provides a summary of memory usage
+
+
+
+
+#DON'T FORGET TO ATTACH THE IAM ROLE (CW-Agent(for now))  which includes the policy - CLOUDWATCHAGENTSERVERPOLICY
+#AND ANOTHER CUSTOM INLINE POLICY CONTAINING THE FOLLOWING
+#Always check whether the region of the deployed ec2 instances & CW alarms are in the same region
+
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Action": [
+				"cloudwatch:PutMetricData",
+				"cloudwatch:GetMetricData",
+				"cloudwatch:ListMetrics",
+				"cloudwatch:DescribeAlarms",
+				"cloudwatch:PutDashboard"
+			],
+			"Resource": "*"
+		}
+	]
+}
